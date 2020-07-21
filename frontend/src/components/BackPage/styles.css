@@ -6,3 +6,15 @@
     align-items: center;
     padding-left: 250px;
 }
+
+@media only screen and (max-width: 950px) {
+    .back-det {
+        flex: 1;
+    }
+}
+
+@media only screen and (max-width: 620px) {
+    .back-det {
+        display: none;
+    }
+}

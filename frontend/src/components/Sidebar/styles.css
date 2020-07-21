@@ -1,0 +1,60 @@
+.box-menu {
+    flex: 1;
+    background-image: url('../../assets//images//bg.png');
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box-logout {
+    align-self: stretch;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 10px 0 0;
+}
+.logout-text {
+    color: #fff;
+    font-size: 0.875em;
+    cursor: pointer;
+}
+
+.box-menu .top-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.user-info {
+    padding-left: 15px;
+}
+
+.user-name {
+    color: #FFF;
+    font-size: 1em;
+}
+
+.user-email {
+    color: #fff;
+    font-size: 0.875em;
+    font-weight: 400;
+}
+
+.menu {
+    margin-top: 130px;
+    align-self: stretch;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-left: 60px;
+}
+
+.menu li {
+    margin-bottom: 20px;
+}
+
+.menu li a {
+    color: #fff;
+    font-size: 1.125em;
+}

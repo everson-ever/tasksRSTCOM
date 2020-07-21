@@ -8,13 +8,11 @@ import Input from '../../components/Input';
 import BackPage from '../../components/BackPage';
 import './styles.css';
 
-const Register = () => {
+const Login = () => {
     const [state, setState] = useState({
         onHandle: false,
-        name: '',
         email: '',
         password: '',
-        passwordConfirmation: '',
         message: '',
         success: false,
     });
@@ -29,15 +27,8 @@ const Register = () => {
         <section className="box-content">
             <BackPage />
             <div className="box-form">
-                <Title text="Faça seu cadastro" />
+                <Title text="Faça seu login" />
                 <form>
-                    <div className="box-input">
-                        <Input type="text" name="name" 
-                        value={state.name} 
-                        placeholder="Nome" 
-                        onChange={(e) => onChangeHandler(e)} />
-                    </div>
-
                     <div className="box-input">
                         <Input type="email" name="email" 
                         value={state.email} 
@@ -51,23 +42,16 @@ const Register = () => {
                         placeholder="Senha" 
                         onChange={(e) => onChangeHandler(e)} />
                     </div>
-
-                    <div className="box-input">
-                        <Input type="password" name="passwordConfirmation" 
-                        value={state.passwordConfirmation} 
-                        placeholder="Confirmar senha" 
-                        onChange={(e) => onChangeHandler(e)} />
-                    </div>
-
-                    <Button text="cadastrar" />
+                    <Button text="Entrar" />
                 </form>
 
                 <div className="center">
-                    <Link to="/login" className="text-link">Eu já possuo cadastro</Link>
+                    <Link to="/" className="text-link">Não possuo cadastro</Link>
                 </div>
+                
             </div>
         </section>
     );
 }
 
-export default Register;
+export default Login;

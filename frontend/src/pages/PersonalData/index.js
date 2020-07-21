@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { Link } from 'react-router-dom';
-
-import Title from '../../components/Title';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import BackPage from '../../components/BackPage';
+import Sidebar from '../../components/Sidebar';
+
+
+import User from '../../assets/images/user.png';
 import './styles.css';
 
-const Register = () => {
+const PersonalData = () => {
     const [state, setState] = useState({
         onHandle: false,
         name: '',
@@ -24,12 +24,15 @@ const Register = () => {
         setState({...state, [e.target.name]: value})
     }
 
-
     return (
-        <section className="box-content">
-            <BackPage />
-            <div className="box-form">
-                <Title text="Faça seu cadastro" />
+        <section className="box-content-site">
+            <Sidebar />
+            <div className="box-form-data">
+                <div className="box-user-picture">
+                    <img className="user-picture" alt="User profile" src={User}/>
+                    <span className="text-change-picture">Alterar foto</span>
+                </div>
+
                 <form>
                     <div className="box-input">
                         <Input type="text" name="name" 
@@ -59,15 +62,12 @@ const Register = () => {
                         onChange={(e) => onChangeHandler(e)} />
                     </div>
 
-                    <Button text="cadastrar" />
+                    <Button text="Editar" width={250} />
                 </form>
-
-                <div className="center">
-                    <Link to="/login" className="text-link">Eu já possuo cadastro</Link>
-                </div>
             </div>
         </section>
     );
+
 }
 
-export default Register;
+export default PersonalData;
