@@ -6,7 +6,7 @@ import Input from '../../components/Input';
 import BackPage from '../../components/BackPage';
 import './styles.css';
 
-const Login = () => {
+const Register = () => {
     const [state, setState] = useState({
         onHandle: false,
         name: '',
@@ -66,4 +66,4 @@ const Login = () => {
     );
 }
 
-export default Login;
+export default Register;
