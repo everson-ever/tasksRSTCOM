@@ -1,0 +1,8 @@
+.back-det {
+    flex: 3;
+    background-image: url('../../assets//images/bg.png');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    padding-left: 250px;
+}

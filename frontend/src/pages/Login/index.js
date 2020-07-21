@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Title from '../../components/Title';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import BackPage from '../../components/BackPage';
 import './styles.css';
 
 const Login = () => {
@@ -24,8 +25,7 @@ const Login = () => {
 
     return (
         <section className="box-content">
-            <div className="back-det">
-            </div>
+            <BackPage />
             <div className="box-form">
                 <Title text="Faça seu cadastro" />
                 <form>
