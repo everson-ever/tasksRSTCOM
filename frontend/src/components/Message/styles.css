@@ -1,0 +1,9 @@
+.success-message {
+    color: rgb(25, 241, 36);
+    display: block;
+  }
+  
+.error-message {
+    color: rgb(247, 25, 25);
+    display: block;
+}
