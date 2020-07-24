@@ -1,20 +1,22 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-//import { isAuthenticated } from '../../services/auth'
+import { useSelector } from 'react-redux';
 
-export const ProtectedRoute = ({ component: Component, ...rest }) => {
+const ProtectedRoute = ({ component: Component, ...rest }) => {
+    const { isAuthenticated } = useSelector(state => state.security.auth)
+
     return (
         <Route
         { ...rest }
         render={props => {
-            if (true) {
+            if (isAuthenticated) {
                 return <Component { ...props } />;
             }
             else {
                 return (
                     <Redirect
                         to={{
-                            pathname: '/entrar',
+                            pathname: '/login',
                             state: {
                                 from: props.location
                             }
@@ -29,3 +31,5 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
     )
 
 }
+
+export default ProtectedRoute;
