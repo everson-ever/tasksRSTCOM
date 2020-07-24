@@ -39,7 +39,7 @@ class UserService {
         return user;
     }
 
-    async create({ id, name, email, password, picture = null }) {
+    async update({ id, name, email, password, picture = null }) {
         const user = await User.updateOne({_id: id},{ name, email, password, picture });
         return user;
     }
