@@ -1,27 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
 
 import Title from '../../components/Title';
 import Button from '../../components/Button';
-import Input from '../../components/Input';
+import Message from '../../components/Message';
 import BackPage from '../../components/BackPage';
 import './styles.css';
 
 const Register = () => {
     const [state, setState] = useState({
         onHandle: false,
-        name: '',
-        email: '',
-        password: '',
-        passwordConfirmation: '',
         message: '',
         success: false,
     });
 
-    const onChangeHandler = (e) => {
-        const value = e.target.value;
-        setState({...state, [e.target.name]: value})
+    const { register, handleSubmit, errors, formState, reset } = useForm({
+        mode: "onChange"
+    });
+    const { isValid } = formState;
+
+
+    const handleSignup = async (data) => {
+        try {
+            if (!isValid) return;
+            const { name, email, password, passwordConfirmation } = data;
+            await axios.post('http://localhost:3333/api/signup', {
+                name,
+                email,
+                password,
+                passwordConfirmation
+            });
+
+            reset();
+
+            setState({...state, message: 'Cadastro realizado com sucesso'});
+        }
+        catch(error) {
+            setState({ ...state, message: 'Email ou senha incorretos' })
+        }
     }
 
 
@@ -30,36 +49,38 @@ const Register = () => {
             <BackPage />
             <div className="box-form">
                 <Title text="Faça seu cadastro" />
-                <form>
+                <form autoComplete="off" onSubmit={handleSubmit(handleSignup)}>
                     <div className="box-input">
-                        <Input type="text" name="name" 
-                        value={state.name} 
+                        <input type="text" name="name"
                         placeholder="Nome" 
-                        onChange={(e) => onChangeHandler(e)} />
+                        ref={register({ required: true })} />
+                        <Message fieldError={errors.name} type="required" message="O campo nome é obrigatório" />
                     </div>
 
                     <div className="box-input">
-                        <Input type="email" name="email" 
-                        value={state.email} 
+                        <input type="email" name="email" 
                         placeholder="E-mail" 
-                        onChange={(e) => onChangeHandler(e)} />                                             
+                        ref={register({ required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i })} />
+                        <Message fieldError={errors.email} type="required" message="O campo E-mail é obrigatório" />
+                        <Message fieldError={errors.email} type="pattern" message="Digite um E-mail válido" />                                              
                     </div>
 
                     <div className="box-input">
-                        <Input type="password" name="password" 
-                        value={state.password} 
+                        <input type="password" name="password" 
                         placeholder="Senha" 
-                        onChange={(e) => onChangeHandler(e)} />
+                        ref={register({ required: true })} />
+                        <Message fieldError={errors.password} type="required" message="O campo Senha é obrigatório" />
                     </div>
 
                     <div className="box-input">
-                        <Input type="password" name="passwordConfirmation" 
-                        value={state.passwordConfirmation} 
+                        <input type="password" name="passwordConfirmation" 
                         placeholder="Confirmar senha" 
-                        onChange={(e) => onChangeHandler(e)} />
+                        ref={register({ required: true })} />
+                        <Message fieldError={errors.passwordConfirmation} type="required" message="O campo confirmação de senha é obrigatório" />
                     </div>
 
-                    <Button text="cadastrar" />
+                    { state.message && <span className="success-message">{state.message}</span> }
+                    <Button text="cadastrar"/>
                 </form>
 
                 <div className="center">
