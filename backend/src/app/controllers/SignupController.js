@@ -22,11 +22,11 @@ class SignupController {
                 return res.status(400).json(badRequest(new InvalidParamError(error)));
             }
 
-			let user = await UserService.create(fields);
+            let user = await UserService.create(fields);
             
             delete user.password;
 
-			return res.status(201).json(ok(user));
+			return res.status(200).json(ok(user));
 		} catch (err) {
 			return res.status(500).json(serverError());
 		}
