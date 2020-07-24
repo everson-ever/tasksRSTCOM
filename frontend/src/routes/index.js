@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+import ProtectedRoute from '../components/ProtectedRoute';
+import GuestRoute from '../components/GuestRoute';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import PersonalData from '../pages/PersonalData';
@@ -11,10 +13,10 @@ const  Routes = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/" exact={true} component={Register} />
-                <Route path="/login" exact={true} component={Login} />
-                <Route path="/dados-pessoais" exact={true} component={PersonalData} />
-                <Route path="/todolist" exact={true} component={Todo} />
+                <GuestRoute path="/" exact={true} component={Register} />
+                <GuestRoute path="/login" exact={true} component={Login} />
+                <ProtectedRoute path="/dados-pessoais" exact={true} component={PersonalData} />
+                <ProtectedRoute path="/todolist" exact={true} component={Todo} />
             </Switch>
         </BrowserRouter>
     );
