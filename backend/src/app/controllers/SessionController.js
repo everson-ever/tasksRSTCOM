@@ -20,7 +20,8 @@ class Session {
                 return res.status(404).json(badRequest(new NotFoundError(error)));
             }
             
-            const response = { name: user.name, id: user._id, token: User.generateToken(user) }
+            const { _id, name } = user;
+            const response = { id: _id, name, email, token: User.generateToken(user) }
             return res.status(200).json(ok(response));
         }
         catch(error) {
