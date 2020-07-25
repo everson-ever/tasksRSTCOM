@@ -23,7 +23,7 @@ class UserController {
             const { userId } = req;
             const { name, email, password, passwordConfirmation } = req.body;
 
-            if (password === passwordConfirmation) {
+            if (password !== passwordConfirmation) {
                 return res.status(400).json(badRequest(new NotFoundError("A senha e confirmação de senha são diferentes")));
             }
 

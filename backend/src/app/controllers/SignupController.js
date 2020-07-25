@@ -16,7 +16,7 @@ class SignupController {
                 return res.status(400).json(badRequest(new MissingParamError(missingParams)));
             }
 
-            if (password === passwordConfirmation) {
+            if (password !== passwordConfirmation) {
                 return res.status(400).json(badRequest(new NotFoundError("A senha e confirmação de senha são diferentes")));
             }
 
