@@ -39,11 +39,6 @@ class UserService {
         return user;
     }
 
-    async update({ id, name, email, password, picture = null }) {
-        const user = await User.updateOne({_id: id},{ name, email, password, picture });
-        return user;
-    }
-
 }
 
 module.exports = new UserService();
