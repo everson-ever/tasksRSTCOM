@@ -16,9 +16,11 @@ const PersonalData = () => {
     const [success, setSuccess] = useState(false);
     const [onHandle, setOnHandle] = useState(false);
 
-    const { register, handleSubmit, errors } = useForm({
+    const { register, handleSubmit, errors, formState } = useForm({
         mode: "onChange"
     });
+
+    const { isValid } = formState;
 
 
     useEffect(() => {
@@ -40,8 +42,16 @@ const PersonalData = () => {
 
     const handleUpdate = async (data) => {
         try {
+            if (!isValid) return;
+
             setOnHandle(true);
             const { name, email, password, passwordConfirmation } = data;
+            if (password !== passwordConfirmation) {
+                setMessage('As senhas devem ser iguais');
+                setSuccess(false);
+                return;
+            }
+            
             await axios.put('/users', {
                 name,
                 email,
@@ -88,14 +98,17 @@ const PersonalData = () => {
                     <div className="box-input">
                         <input type="password" name="password" 
                         placeholder="Senha" 
-                        ref={register({ required: true })} />
+                        ref={register({ required: true, minLength: 6 })} />
+                        {  }
+                        <Message fieldError={errors.password} type="minLength" message="A senha deve ter no mínimo 6 caracteres" />
                         <Message fieldError={errors.password} type="required" message="O campo Senha é obrigatório" />
                     </div>
 
                     <div className="box-input">
                         <input type="password" name="passwordConfirmation" 
                         placeholder="Confirmar senha" 
-                        ref={register({ required: true })} />
+                        ref={register({ required: true, minLength: 6 })} />
+                        <Message fieldError={errors.passwordConfirmation} type="minLength" message="A senha deve ter no mínimo 6 caracteres" />
                         <Message fieldError={errors.passwordConfirmation} type="required" message="O campo confirmação de senha é obrigatório" />
                     </div>
 

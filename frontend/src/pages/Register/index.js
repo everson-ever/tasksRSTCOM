@@ -27,6 +27,11 @@ const Register = () => {
         try {
             if (!isValid) return;
             const { name, email, password, passwordConfirmation } = data;
+            if (password !== passwordConfirmation) {
+                setState({...state, success: false, message: 'As senhas devem ser iguais'});
+                return;
+            }
+
             await axios.post('/signup', {
                 name,
                 email,
@@ -72,14 +77,16 @@ const Register = () => {
                     <div className="box-input">
                         <input type="password" name="password" 
                         placeholder="Senha" 
-                        ref={register({ required: true })} />
+                        ref={register({ required: true, minLength: 6 })} />
+                        <Message fieldError={errors.password} type="minLength" message="A senha deve ter no mínimo 6 caracteres" />
                         <Message fieldError={errors.password} type="required" message="O campo Senha é obrigatório" />
                     </div>
 
                     <div className="box-input">
                         <input type="password" name="passwordConfirmation" 
                         placeholder="Confirmar senha" 
-                        ref={register({ required: true })} />
+                        ref={register({ required: true, minLength: 6 })} />
+                         <Message fieldError={errors.passwordConfirmation} type="minLength" message="A senha deve ter no mínimo 6 caracteres" />
                         <Message fieldError={errors.passwordConfirmation} type="required" message="O campo confirmação de senha é obrigatório" />
                     </div>
 
