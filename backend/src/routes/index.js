@@ -14,7 +14,9 @@ routes.post('/session', SessionController.store);
 
 routes.post('/signup', SignupController.store);
 
-routes.put('/users', authMiddleware, upload.single('image'),  UserController.update);
+routes.get('/users/me', authMiddleware,  UserController.show);
+routes.put('/users', authMiddleware,  UserController.update);
+routes.post('/users/picture', authMiddleware, upload.single('image'), UserController.uploadPicture);
 
 routes.get('/todos', authMiddleware, TodoController.index);
 routes.post('/todos', authMiddleware, TodoController.store);
