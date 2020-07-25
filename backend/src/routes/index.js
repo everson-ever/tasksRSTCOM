@@ -21,6 +21,7 @@ routes.post('/users/picture', authMiddleware, upload.single('image'), UserContro
 routes.get('/todos', authMiddleware, TodoController.index);
 routes.post('/todos', authMiddleware, TodoController.store);
 routes.delete('/todos/:id', authMiddleware, TodoController.destroy);
+routes.put('/todos/status', authMiddleware, TodoController.updateStatus);
 
 
 module.exports = routes;

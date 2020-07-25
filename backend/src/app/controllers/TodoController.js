@@ -40,9 +40,30 @@ class TodoController {
 
             const deleted = await TodoService.delete(id);
 
-            return res.status(201).json(ok(deleted));
+            return res.status(200).json(ok(deleted));
         }
         catch(error) {
+            return res.status(500).json(serverError());
+        }
+    }
+
+    async updateStatus(req, res) {
+        try {
+            const { id, status } = req.body;
+
+            const todo = await TodoService.getTodo(id);
+            if (!todo) {
+                return res.status(404).json(badRequest(new NotFoundError("Tarefa não encontrada")));
+            }
+
+            todo.completed = status;
+            todo.save();
+
+            return res.status(201).json(ok(todo));
+
+        }
+        catch(error) {
+            console.log(error);
             return res.status(500).json(serverError());
         }
     }
