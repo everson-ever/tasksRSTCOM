@@ -32,8 +32,8 @@ const UserSchema = new mongoose.Schema({
     timestamps: true
 });
 
-UserSchema.statics.generateToken = function({ _id, name, role }) {
-	return jwt.sign({ _id, name, role }, jwtSecure.jwtsecure, {
+UserSchema.statics.generateToken = function({ _id, name,email, role }) {
+	return jwt.sign({ _id, name, email, role }, jwtSecure.jwtsecure, {
 		expiresIn: jwtSecure.ttl
 	});
 };
