@@ -23,9 +23,13 @@ class UserController {
             const { userId } = req;
             const { name, email, password, passwordConfirmation } = req.body;
 
+            if (password === passwordConfirmation) {
+                return res.status(400).json(badRequest(new NotFoundError("A senha e confirmação de senha são diferentes")));
+            }
+
             const user = await UserService.findById(userId);
             if (!user) {            
-                return res.status(404).json(badRequest(new NotFoundError("Erro ao editar os dados")));
+                return res.status(400).json(badRequest(new NotFoundError("Erro ao editar os dados")));
             }
 
             user.name = name;

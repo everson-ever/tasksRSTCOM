@@ -8,12 +8,16 @@ class SignupController {
     async store(req, res) {
 		try {
             const fields = req.body;
-            const { email } = fields;      
+            const { email, password, passwordConfirmation } = fields;      
             const requiredFields = ['name', 'email', 'password'];
             const missingParams = UserService.checkRequiredParams(fields, requiredFields);
 
             if (missingParams) {
                 return res.status(400).json(badRequest(new MissingParamError(missingParams)));
+            }
+
+            if (password === passwordConfirmation) {
+                return res.status(400).json(badRequest(new NotFoundError("A senha e confirmação de senha são diferentes")));
             }
 
             let userExists = await UserService.findByEmail(email);
