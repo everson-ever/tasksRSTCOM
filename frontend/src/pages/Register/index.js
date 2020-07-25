@@ -4,11 +4,14 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
+import Logo from '../../assets/images/logo-rstcom-ok-.png'
+
 import Title from '../../components/Title';
 import Button from '../../components/Button';
 import Message from '../../components/Message';
 import BackPage from '../../components/BackPage';
 import './styles.css';
+import LogoMobile from '../../components/LogoMobile';
 
 const Register = () => {
     const [state, setState] = useState({
@@ -57,6 +60,8 @@ const Register = () => {
         <section className="box-content">
             <BackPage />
             <div className="box-form">
+                <LogoMobile logo={Logo} />
+
                 <Title text="Faça seu cadastro" />
                 <form autoComplete="off" onSubmit={handleSubmit(handleSignup)}>
                     <div className="box-input">

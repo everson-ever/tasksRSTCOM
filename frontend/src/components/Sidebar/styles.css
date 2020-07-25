@@ -58,3 +58,11 @@
     color: #fff;
     font-size: 1.125em;
 }
+
+@media only screen and (max-width: 450px) {
+    .menu {
+        margin-top: 60px;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}

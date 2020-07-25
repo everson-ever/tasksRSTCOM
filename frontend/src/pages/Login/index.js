@@ -9,11 +9,14 @@ import { useForm } from 'react-hook-form';
 import { login } from '../../redux/_actions';
 import { saveToken } from '../../services/auth';
 
+import Logo from '../../assets/images/logo-rstcom-ok-.png'
+
 import Title from '../../components/Title';
 import Button from '../../components/Button';
 import Message from '../../components/Message';
 import BackPage from '../../components/BackPage';
 import './styles.css';
+import LogoMobile from '../../components/LogoMobile';
 
 const Login = () => {
     const [state, setState] = useState({
@@ -64,6 +67,8 @@ const Login = () => {
         <section className="box-content">
             <BackPage />
             <div className="box-form">
+                <LogoMobile logo={Logo} />
+
                 <Title text="Faça seu login" />
                 <form autoComplete="off" onSubmit={handleSubmit(handleSignin)}>
                     <div className="box-input">
