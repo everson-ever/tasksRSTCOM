@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const mongoose = require('mongoose');
 const configDatabase = require('./app/config/database');
 
@@ -24,6 +25,8 @@ class App {
 	middlewares() {
 		this.server.use(express.json());
 		this.server.use(cors());
+		this.server.use('/pictures', express.static(path.resolve(__dirname, '..', 'tmp', 'uploads')));
+		
 	}
 
 	routes() {
