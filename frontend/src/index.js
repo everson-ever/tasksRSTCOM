@@ -1,13 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import { Provider } from 'react-redux';
+import axios from 'axios';
 
+import { getToken } from './services/auth';
 import Routes from './routes';
 import store from './redux/store';
+
+axios.defaults.baseURL = 'http://localhost:3333/api';
+axios.interceptors.request.use(function (config) {
+  let token = getToken()
+  if (token) {
+    token = `Bearer ${token}`;
+    config.headers.Authorization = token;
+  }
+
+  return config;
+});
 
 ReactDOM.render(
   <React.StrictMode>
