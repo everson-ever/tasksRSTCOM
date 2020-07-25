@@ -27,7 +27,7 @@ const Register = () => {
         try {
             if (!isValid) return;
             const { name, email, password, passwordConfirmation } = data;
-            await axios.post('http://localhost:3333/api/signup', {
+            await axios.post('/signup', {
                 name,
                 email,
                 password,
@@ -35,11 +35,15 @@ const Register = () => {
             });
 
             reset();
-
-            setState({...state, message: 'Cadastro realizado com sucesso'});
+            setState({...state, success: true, message: 'Cadastro realizado com sucesso'});
         }
         catch(error) {
-            setState({ ...state, message: 'Email ou senha incorretos' })
+            const { statusCode, error: data } = error?.response?.data
+            if (statusCode !== 500) {
+                const message = data.params;
+                setState({ ...state, message: message[0] })
+            }
+            
         }
     }
 
@@ -79,8 +83,10 @@ const Register = () => {
                         <Message fieldError={errors.passwordConfirmation} type="required" message="O campo confirmação de senha é obrigatório" />
                     </div>
 
-                    { state.message && <span className="success-message">{state.message}</span> }
+                    { state.message && state.success && <span className="success-message">{state.message}</span> }
+                    { state.message && !state.success && <span className="error-message">{state.message}</span> }
                     <Button text="cadastrar"/>
+                    
                 </form>
 
                 <div className="center">

@@ -1,0 +1,45 @@
+.box-user-picture {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 40px;
+}
+
+.user-picture {
+    align-self: flex-start;
+    margin-left: 20px;
+    max-width: 145px;
+    border-radius: 50%;
+}
+
+.text-change-picture {
+    font-size: 0.875em;
+    text-decoration: underline;
+    color: #707070;
+    cursor: pointer;
+}
+
+.box-image-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 350px;
+    padding: 30px;
+    background-color: rgba(0,0,0,0.1);
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 12px;
+}
+
+.image-preview {
+    max-width: 350px;
+    margin-bottom: 20px;
+}
+
+.btn-picture {
+    color: #000;
+    font-weight: 600;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 5px;
+}

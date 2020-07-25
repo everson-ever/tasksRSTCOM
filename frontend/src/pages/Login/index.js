@@ -43,7 +43,7 @@ const Login = () => {
            if (!isValid) return;
 
             const { email, password } = data;
-            const response = await axios.post('http://localhost:3333/api/session', {
+            const response = await axios.post('/session', {
                 email,
                 password
             });

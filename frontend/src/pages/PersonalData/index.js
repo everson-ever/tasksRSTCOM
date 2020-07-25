@@ -1,68 +1,107 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
+
+import Message from '../../components/Message';
 import Button from '../../components/Button';
-import Input from '../../components/Input';
 import Sidebar from '../../components/Sidebar';
 
-
-import User from '../../assets/images/user.png';
 import './styles.css';
+import PictureProfile from '../../components/PictureProfile';
 
 const PersonalData = () => {
-    const [state, setState] = useState({
-        onHandle: false,
-        name: '',
-        email: '',
-        password: '',
-        passwordConfirmation: '',
-        message: '',
-        success: false,
+    const [userData, setUserData] = useState({});
+    const [message, setMessage] = useState('');
+    const [success, setSuccess] = useState(false);
+    const [onHandle, setOnHandle] = useState(false);
+
+    const { register, handleSubmit, errors } = useForm({
+        mode: "onChange"
     });
 
-    const onChangeHandler = (e) => {
-        const value = e.target.value;
-        setState({...state, [e.target.name]: value})
+
+    useEffect(() => {
+        async function getUserData() {
+            try {
+                const response = await axios.get('/users/me');
+                const { body: userData } = response.data;
+
+                setUserData(userData);  
+            }
+            catch(error) {
+                console.log(error);
+            }
+        }
+
+        getUserData()
+    }, [])
+
+
+    const handleUpdate = async (data) => {
+        try {
+            setOnHandle(true);
+            const { name, email, password, passwordConfirmation } = data;
+            await axios.put('/users', {
+                name,
+                email,
+                password,
+                passwordConfirmation
+            });
+
+            setSuccess(true);
+            setMessage('Dados atualizados com sucesso');
+        }
+        catch(error) {
+            setSuccess(false);
+            setMessage('Não foi possível processar a solicitação no momento');
+        }
+        finally {
+            setOnHandle(false);
+        }
     }
 
     return (
         <section className="box-content-site">
             <Sidebar />
             <div className="box-form-data">
-                <div className="box-user-picture">
-                    <img className="user-picture" alt="User profile" src={User}/>
-                    <span className="text-change-picture">Alterar foto</span>
-                </div>
+                <PictureProfile userPicture={userData?.picture} />
 
-                <form>
+                <form autoComplete="off" onSubmit={handleSubmit(handleUpdate)}>
                     <div className="box-input">
-                        <Input type="text" name="name" 
-                        value={state.name} 
-                        placeholder="Nome" 
-                        onChange={(e) => onChangeHandler(e)} />
+                        <input type="text" name="name"
+                        placeholder="Nome"
+                        defaultValue={userData.name} 
+                        ref={register({ required: true })} />
+                        <Message fieldError={errors.name} type="required" message="O campo nome é obrigatório" />
                     </div>
 
                     <div className="box-input">
-                        <Input type="email" name="email" 
-                        value={state.email} 
+                        <input type="email" name="email" 
                         placeholder="E-mail" 
-                        onChange={(e) => onChangeHandler(e)} />                                             
+                        defaultValue={userData.email} 
+                        ref={register({ required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i })} />
+                        <Message fieldError={errors.email} type="required" message="O campo E-mail é obrigatório" />
+                        <Message fieldError={errors.email} type="pattern" message="Digite um E-mail válido" />                                              
                     </div>
 
                     <div className="box-input">
-                        <Input type="password" name="password" 
-                        value={state.password} 
+                        <input type="password" name="password" 
                         placeholder="Senha" 
-                        onChange={(e) => onChangeHandler(e)} />
+                        ref={register({ required: true })} />
+                        <Message fieldError={errors.password} type="required" message="O campo Senha é obrigatório" />
                     </div>
 
                     <div className="box-input">
-                        <Input type="password" name="passwordConfirmation" 
-                        value={state.passwordConfirmation} 
+                        <input type="password" name="passwordConfirmation" 
                         placeholder="Confirmar senha" 
-                        onChange={(e) => onChangeHandler(e)} />
+                        ref={register({ required: true })} />
+                        <Message fieldError={errors.passwordConfirmation} type="required" message="O campo confirmação de senha é obrigatório" />
                     </div>
 
-                    <Button text="Editar" width={250} />
+                    { message && success && <span className="success-message">{message}</span> }
+                    { message && !success && <span className="error-message">{message}</span> }
+                    <Button text="Editar" onHandle={onHandle} width={250} />
                 </form>
             </div>
         </section>

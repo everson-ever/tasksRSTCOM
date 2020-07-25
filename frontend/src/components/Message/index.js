@@ -5,7 +5,7 @@ import './styles.css';
 const Message = ({message, fieldError, type, isError = true}) => {
     return (
         <>
-            { fieldError && fieldError.type == type? <span className={isError? 'error-message':'success-message'}>{message}</span> : null }        
+            { fieldError && fieldError.type.toString() === type.toString()? <span className={isError? 'error-message':'success-message'}>{message}</span> : null }        
         </>
     );
 }
