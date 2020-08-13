@@ -1,14 +1,14 @@
 const UserService = require('../services/UserService');
 const { badRequest, serverError, ok } = require('../helpers/httpHelper');
-const MissingParamError = require('../errors/MissingParamError');
-const InvalidParamError = require('../errors/InvalidParamError');
+const MissingParamError = require('../errors/missingParamError');
+const InvalidParamError = require('../errors/invalidParamError');
 
 class SignupController {
 
     async store(req, res) {
-		try {
+        try {
             const fields = req.body;
-            const { email, password, passwordConfirmation } = fields;      
+            const { email, password, passwordConfirmation } = fields;
             const requiredFields = ['name', 'email', 'password'];
             const missingParams = UserService.checkRequiredParams(fields, requiredFields);
 
@@ -27,14 +27,14 @@ class SignupController {
             }
 
             let user = await UserService.create(fields);
-            
+
             delete user.password;
 
-			return res.status(200).json(ok(user));
-		} catch (err) {
-			return res.status(500).json(serverError());
-		}
-	}
+            return res.status(200).json(ok(user));
+        } catch (err) {
+            return res.status(500).json(serverError());
+        }
+    }
 
 }
 

@@ -1,4 +1,4 @@
-const ServerError = require('../errors/ServerError');
+const ServerError = require('../errors/serverError');
 
 const badRequest = (error) => {
     return {
