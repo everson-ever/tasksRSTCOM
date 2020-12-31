@@ -1,0 +1,46 @@
+version: '3'
+services: 
+    backend:
+      container_name: TASKS_BACKEND
+      build:
+          context: ./backend
+      ports:
+        - "3333:3333"
+      networks: 
+        - tasks_tunnel
+      restart: always
+      volumes: 
+        - ./backend/:/app/
+        - /app/node_modules
+      depends_on: 
+        - mongodb
+    frontend:
+      container_name: TASKS_FRONTEND
+      build: 
+        context: ./frontend
+      ports:
+        - "3000:3000"
+      networks: 
+        - tasks_tunnel
+      restart: always
+      stdin_open: true
+      volumes: 
+        - ./frontend/:/app/
+        - /app/node_modules
+      depends_on: 
+        - backend
+    mongodb:
+      container_name: TASKS_MONGODB
+      image: mongo:3.6.21-xenial
+      networks: 
+        - tasks_tunnel
+      restart: unless-stopped
+      ports: 
+        - "27017:27017"
+      volumes:
+        - mongodata:/data/db
+networks: 
+    tasks_tunnel:
+        driver: bridge
+volumes:
+  mongodata:

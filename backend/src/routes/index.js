@@ -10,6 +10,12 @@ const SessionController = require('../app/controllers/SessionController');
 const UserController = require('../app/controllers/UserController');
 const TodoController = require('../app/controllers/TodoController');
 
+routes.get('/', (req, res) => {
+    return res.status(200).json({
+        message: 'App taks is works'
+    });
+});
+
 routes.post('/session', SessionController.store);
 
 routes.post('/signup', SignupController.store);

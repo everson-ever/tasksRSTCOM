@@ -1,12 +1,10 @@
-FROM node:12 as builder
+FROM node:14.15.3-alpine3.10
 
-WORKDIR /usr/src/app
+RUN npm i -g create-react-app
+WORKDIR /app
 COPY package*.json ./
+COPY yarn.lock ./
 RUN npm install
-COPY src/ ./src/
-COPY public/ ./public/
-RUN npm run build
-
-FROM nginx:latest
-COPY --from=builder /usr/src/app/build/ /usr/share/nginx/html
-EXPOSE 80
+COPY . . 
+EXPOSE 3000
+CMD ["npm", "start"]
